@@ -1,0 +1,56 @@
+/* Style pour le corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    line-height: 1.6;
+}
+
+/* Style pour le menu */
+nav {
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Style pour les sections */
+section {
+    margin-bottom: 40px;
+}
+
+/* Style des images et légendes */
+figure {
+    margin: 0;
+    /* Supprime la marge par défaut du figure */
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    /* Assure que l'image prend tout l'espace */
+}
+
+figcaption {
+    text-align: left;
+    /* Aligne la légende à gauche */
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 10px;
+    /* Espace entre l'image et la légende */
+}
+
+/* Style pour le pied de page */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.8em;
+    color: #777;
+}
