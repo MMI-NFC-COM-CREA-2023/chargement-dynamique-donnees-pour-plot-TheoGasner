@@ -1,0 +1,14 @@
+{
+    "vehicles": [
+        { "type": "SUV", "count": 120 },
+        { "type": "Berline", "count": 80 },
+        { "type": "Hatchback", "count": 60 },
+        { "type": "Pick-up", "count": 50 }
+    ],
+    "cars": [
+        { "model": "Modèle A", "weight": 1500, "fuelConsumption": 8.5 },
+        { "model": "Modèle B", "weight": 1800, "fuelConsumption": 7.0 },
+        { "model": "Modèle C", "weight": 1300, "fuelConsumption": 6.5 },
+        { "model": "Modèle D", "weight": 2000, "fuelConsumption": 9.0 }
+    ]
+}

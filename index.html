@@ -4,80 +4,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemple avec graphiques dynamiques</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Chargement de Plotly -->
+    <title>Graphiques avec Observable Plot</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
     <header>
-        <h1>Page avec Ancres et Graphiques</h1>
+        <h1>Graphiques avec Observable Plot</h1>
     </header>
 
-    <!-- Menu avec des liens vers les sous parties -->
+    
     <nav>
-        <a href="#partie1">Sous-partie 1</a>
-        <a href="#partie2">Sous-partie 2</a>
+        <a href="#graphique1">Graphique 1</a>
+        <a href="#graphique2">Graphique 2</a>
     </nav>
 
-    <!-- Première sous-partie -->
+    
     <section id="partie1">
-        <h2>Sous-partie 1</h2>
-        <p>Voici un exemple de contenu textuel pour la première sous-partie.</p>
+        <h2>Graphique 1 </h2>
+        <p>Le graphique ci-dessous montre la répartition des véhicules selon leur type et leur consommation de
+            carburant.</p>
 
-        <!-- Div pour le graphique 1 -->
-        <div id="graphique1" style="width: 600px; height: 400px;"></div>
+       
+        <div id="graphique1" style="width: 100%; height: 400px;"></div>
     </section>
 
-    <!-- Deuxième sous-partie -->
+   
     <section id="partie2">
-        <h2>Sous-partie 2</h2>
-        <p>Ceci est le contenu textuel de la deuxième sous-partie.</p>
+        <h2>Graphique 2</h2>
+        <p>Le graphique suivant affiche la relation entre le poids des voitures et leur consommation de carburant. On
+            peut voir comment ces deux variables sont liées.</p>
 
-        <!-- Div pour le graphique 2 -->
-        <div id="graphique2" style="width: 600px; height: 400px;"></div>
+        
+        <div id="graphique2" style="width: 100%; height: 400px;"></div>
     </section>
 
     <footer>
         <p>Exemple - BUT MMI</p>
     </footer>
 
-    <!-- Script pour charger et afficher le JSON et les graphiques -->
-    <script>
-        // Fonction asynchrone pour charger le JSON
+    
+    <script type="module">
+        import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+
         async function chargerDonneesJSON() {
             try {
-                const response = await fetch('donnees.json'); // Remplacez par le bon chemin si nécessaire
+                const response = await fetch('donnee.json');
                 if (!response.ok) {
                     throw new Error('Erreur lors du chargement des données');
                 }
-                const data = await response.json(); // Extraction des données au format JSON
+                const data = await response.json();
                 return data;
             } catch (error) {
                 console.error("Erreur : ", error);
             }
         }
 
-        // Appel de la fonction et affichage des graphiques
-        chargerDonneesJSON()
-            .then(data => {
-                // Créer le premier graphique avec Plotly
-                var trace1 = {
-                    x: data.graphique1.x,
-                    y: data.graphique1.y,
-                    type: 'scatter'
-                };
-                Plotly.newPlot('graphique1', [trace1]);
+        chargerDonneesJSON().then(data => {
+            if (data) {
+               
+                const plot1 = Plot.plot({
+                    marginLeft: 120,
+                    padding: 0,
+                    color: { scheme: "set1", legend: true },
+                    marks: [
+                        Plot.barY(data.vehicles, {
+                            x: "type",
+                            y: "count",
+                            fill: "type"
+                        })
+                    ],
+                    x: { label: "Type de véhicule" },
+                    y: { label: "Nombre de véhicules" }
+                });
+                document.querySelector("#graphique1").append(plot1);
 
-                // Créer le deuxième graphique avec Plotly
-                var trace2 = {
-                    x: data.graphique2.x,
-                    y: data.graphique2.y,
-                    type: 'scatter'
-                };
-                Plotly.newPlot('graphique2', [trace2]);
-            });
+               
+                const plot2 = Plot.plot({
+                    x: { label: "Poids (kg)" },
+                    y: { label: "Consommation (L/100km)" },
+                    color: { scheme: "viridis" },
+                    marks: [
+                        Plot.dot(data.cars, {
+                            x: "weight",
+                            y: "fuelConsumption",
+                            fill: "model",
+                            stroke: "black"
+                        })
+                    ]
+                });
+                document.querySelector("#graphique2").append(plot2);
+            }
+        });
     </script>
 
 </body>
