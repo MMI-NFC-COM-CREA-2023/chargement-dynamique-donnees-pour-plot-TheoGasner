@@ -1,0 +1,15 @@
+{
+  "name": "chargement-dynamique-donnees-pour-plot-theogasner",
+  "version": "1.0.0",
+  "description": "- nom : GASNER\r - prénom : Théo\r - URL du site :",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@observablehq/plot": "^0.6.16"
+  }
+}

@@ -4,45 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemple de page avec ancres</title>
+    <title>Exemple avec graphiques dynamiques</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Chargement de Plotly -->
 </head>
 
 <body>
 
     <header>
-        <h1>Page avec Ancres et Contenu Statique</h1>
+        <h1>Page avec Ancres et Graphiques</h1>
     </header>
 
+    <!-- Menu avec des liens vers les sous parties -->
     <nav>
         <a href="#partie1">Sous-partie 1</a>
         <a href="#partie2">Sous-partie 2</a>
     </nav>
 
+    <!-- Première sous-partie -->
     <section id="partie1">
         <h2>Sous-partie 1</h2>
-        <p>Voici un exemple de contenu textuel pour la première sous-partie. Ce texte explique quelque chose
-            d'intéressant.</p>
+        <p>Voici un exemple de contenu textuel pour la première sous-partie.</p>
 
-        <figure>
-            <img src="https://via.placeholder.com/600x300" alt="Image exemple 1">
-            <figcaption>Légende de l'image pour la sous-partie 1.</figcaption>
-        </figure>
+        <!-- Div pour le graphique 1 -->
+        <div id="graphique1" style="width: 600px; height: 400px;"></div>
     </section>
 
+    <!-- Deuxième sous-partie -->
     <section id="partie2">
         <h2>Sous-partie 2</h2>
-        <p>Ceci est le contenu textuel de la deuxième sous-partie. Il contient des informations complémentaires.</p>
+        <p>Ceci est le contenu textuel de la deuxième sous-partie.</p>
 
-        <figure>
-            <img src="https://via.placeholder.com/600x300" alt="Image exemple 2">
-            <figcaption>Légende de l'image pour la sous-partie 2.</figcaption>
-        </figure>
+        <!-- Div pour le graphique 2 -->
+        <div id="graphique2" style="width: 600px; height: 400px;"></div>
     </section>
 
     <footer>
-        <p>Page statique d'exemple - BUT MMI</p>
+        <p>Exemple - BUT MMI</p>
     </footer>
+
+    <!-- Script pour charger et afficher le JSON et les graphiques -->
+    <script>
+        // Fonction asynchrone pour charger le JSON
+        async function chargerDonneesJSON() {
+            try {
+                const response = await fetch('donnees.json'); // Remplacez par le bon chemin si nécessaire
+                if (!response.ok) {
+                    throw new Error('Erreur lors du chargement des données');
+                }
+                const data = await response.json(); // Extraction des données au format JSON
+                return data;
+            } catch (error) {
+                console.error("Erreur : ", error);
+            }
+        }
+
+        // Appel de la fonction et affichage des graphiques
+        chargerDonneesJSON()
+            .then(data => {
+                // Créer le premier graphique avec Plotly
+                var trace1 = {
+                    x: data.graphique1.x,
+                    y: data.graphique1.y,
+                    type: 'scatter'
+                };
+                Plotly.newPlot('graphique1', [trace1]);
+
+                // Créer le deuxième graphique avec Plotly
+                var trace2 = {
+                    x: data.graphique2.x,
+                    y: data.graphique2.y,
+                    type: 'scatter'
+                };
+                Plotly.newPlot('graphique2', [trace2]);
+            });
+    </script>
 
 </body>
 
